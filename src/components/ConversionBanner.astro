@@ -1,0 +1,36 @@
+---
+import { SITE, whatsappUrl } from '../config/site';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  waMessage?: string;
+}
+
+const {
+  title = 'جاهز لبيع أثاثك أو أجهزتك المستعملة بأعلى سعر كاش؟',
+  subtitle = 'أرسل صور القطع الآن عبر واتساب لتحصل على تقييم مبدئي خلال دقائق، ومعاينة مجانية وفك ونقل على حسابنا في أي محافظة داخل مصر.',
+  waMessage,
+} = Astro.props;
+---
+
+<section class="prefooter-cta">
+  <div class="container">
+    <div class="prefooter-inner">
+      <span class="eyebrow">تقييم فوري مجاني • دفع كاش كامل</span>
+      <h2 class="section-title">{title}</h2>
+      <p class="section-lead" style="margin-inline:auto;">{subtitle}</p>
+      <div class="prefooter-actions">
+        <a href={whatsappUrl(waMessage)} target="_blank" rel="noopener noreferrer" class="btn btn-accent">
+          أرسل الصور واتساب للتقييم
+        </a>
+        <a href={SITE.phoneHref} class="btn btn-outline-dark">
+          اتصل الآن: {SITE.phoneDisplay}
+        </a>
+        <a href="/contact" class="btn btn-white" style="border-color:var(--border-subtle);">
+          نموذج طلب المعاينة
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqSection from '../components/FaqSection.astro';
+import ConversionBanner from '../components/ConversionBanner.astro';
+import { SITE, IMG_DIMS, whatsappUrl } from '../config/site';
+import { SERVICE_PAGES, type ServicePageData } from '../data/services';
+
+export function getStaticPaths() {
+  return SERVICE_PAGES.map((page) => ({
+    params: { service: page.slug },
+    props: { page },
+  }));
+}
+
+interface Props {
+  page: ServicePageData;
+}
+
+const { page } = Astro.props;
+const dims = IMG_DIMS[page.heroImage] || { w: 1376, h: 768 };
+
+const breadcrumbs = [
+  { label: 'الرئيسية', href: '/' },
+  { label: page.shortTitle, href: `/${page.slug}` },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: page.h1,
+    description: page.description,
+    provider: { '@id': `${SITE.domain}/#localbusiness` },
+    areaServed: { '@type': 'Country', name: 'Egypt' },
+    serviceType: page.shortTitle,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: page.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={page.title}
+  description={page.description}
+  canonicalPath={`/${page.slug}`}
+  ogImage={page.heroImage}
+  breadcrumbs={breadcrumbs}
+  schemas={schemas}
+>
+  <section class="page-hero">
+    <img src={page.heroImage} alt={page.h1} width={dims.w} height={dims.h} class="hero-bg" fetchpriority="high" />
+    <div class="hero-overlay"></div>
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="مسار التنقل">
+        <a href="/">الرئيسية</a>
+        <span>/</span>
+        <span>{page.shortTitle}</span>
+      </nav>
+      <span class="eyebrow">{page.eyebrow}</span>
+      <h1>{page.h1}</h1>
+      <p class="hero-subtitle" style="margin-bottom:1.5rem;">{page.lead}</p>
+      <div class="hero-ctas">
+        <a href={whatsappUrl(page.waMessage)} target="_blank" rel="noopener noreferrer" class="btn btn-white">
+          أرسل الصور واتساب للتقييم الفوري
+        </a>
+        <a href={SITE.phoneHref} class="btn btn-accent">
+          اتصل الآن: {SITE.phoneDisplay}
+        </a>
+      </div>
+      <div class="trust-pills">
+        <span class="trust-pill">معاينة منزلية مجانية</span>
+        <span class="trust-pill">دفع كاش كامل قبل التحميل</span>
+        <span class="trust-pill">فك ونقل على حساب أركان</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-layout">
+      <div class="prose-block">
+        <div class="info-grid-2" style="margin-top:0;">
+          {page.highlights.map((h) => (
+            <div class="info-box">
+              <h3>{h.title}</h3>
+              <p>{h.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {page.sections.map((sec) => (
+          <div>
+            <h2>{sec.h2}</h2>
+            {sec.paragraphs.map((p) => <p>{p}</p>)}
+            {sec.bullets && (
+              <ul>
+                {sec.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            )}
+          </div>
+        ))}
+
+        <h2>معايير الفحص والتسعير العادل في شركة أركان</h2>
+        <p>
+          نعتمد في أركان نظام تقييم شفاف وواضح يضمن لك الحصول على أعلى سعر ممكن في السوق المصري عند البيع، بعيداً عن التقديرات العشوائية أو المماطلة يوم الاستلام. يأخذ خبير المعاينة في الاعتبار الحالة الفعلية، عمر الاستخدام، نظافة الهيكل الخارجي والداخلي، ومدى الطلب على الماركة أو الخامة في السوق الحالي، مع تحمّل أركان كامل تكلفة الفك والتحميل والنقل من منزلك.
+        </p>
+        <div class="info-grid-2">
+          <div class="info-box">
+            <h3>1. التقييم المبدئي عبر صور واتساب</h3>
+            <p>أرسل 3 صور واضحة في إضاءة النهار مع ذكر الماركة أو المقاس ومحافظتك لتستلم نطاق السعر العادل خلال 10 دقائق.</p>
+          </div>
+          <div class="info-box">
+            <h3>2. المعاينة المجانية والدفع كاش</h3>
+            <p>يصل مندوبنا في الموعد المتفق عليه للفحص النهائي ودفع كامل القيمة نقداً أو عبر إنستا باي قبل تحريك أي قطعة.</p>
+          </div>
+        </div>
+
+        <h2>الماركات والأنواع التي نشتريها بأعلى تقييم</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:0.55rem; margin:1rem 0 2rem;">
+          {page.brands.map((b) => (
+            <span style="padding:0.42rem 0.9rem; background:var(--bg-soft); border:1px solid var(--border-subtle); font-weight:700; font-size:0.88rem; border-radius:2px;">
+              {b}
+            </span>
+          ))}
+        </div>
+
+        <div class="inline-cta-box">
+          <div>
+            <h3>احصل على عرض سعر فوري خلال 10 دقائق</h3>
+            <p>صوّر القطع وأرسلها عبر واتساب الآن — نرد عليك بالتقييم العادل فوراً دون أي التزام.</p>
+          </div>
+          <a href={whatsappUrl(page.waMessage)} target="_blank" rel="noopener noreferrer" class="btn btn-accent">
+            تقييم فوري واتساب
+          </a>
+        </div>
+      </div>
+
+      <aside class="sticky-sidebar">
+        <div class="sidebar-card">
+          <h3>تواصل مباشر مع أركان</h3>
+          <p>أرسل صور القطع عبر واتساب أو اتصل بنا لحجز معاينة مجانية في أي محافظة داخل مصر.</p>
+          <div style="display:grid; gap:0.65rem;">
+            <a href={whatsappUrl(page.waMessage)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+              أرسل الصور واتساب الآن
+            </a>
+            <a href={SITE.phoneHref} class="btn btn-white">
+              اتصل: {SITE.phoneDisplay}
+            </a>
+            <a href="/contact" class="btn btn-outline-light">
+              نموذج طلب معاينة
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-links-card">
+          <h4>صفحات وأدلة ذات صلة</h4>
+          <ul>
+            {page.relatedLinks.map((link) => (
+              <li><a href={link.href}>← {link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <FaqSection title={`أسئلة شائعة حول ${page.shortTitle}`} items={page.faqs} />
+  <ConversionBanner waMessage={page.waMessage} />
+</BaseLayout>

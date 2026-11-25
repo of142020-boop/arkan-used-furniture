@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import ConversionBanner from '../../components/ConversionBanner.astro';
+import { SITE, IMG_DIMS, whatsappUrl } from '../../config/site';
+import { BLOG_ARTICLES, type BlogArticleData } from '../../data/blog';
+
+export function getStaticPaths() {
+  return BLOG_ARTICLES.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: BlogArticleData;
+}
+
+const { article } = Astro.props;
+const dims = IMG_DIMS[article.heroImage] || { w: 1376, h: 768 };
+
+const breadcrumbs = [
+  { label: 'الرئيسية', href: '/' },
+  { label: 'المدونة وأدلة الأسعار', href: '/blog' },
+  { label: article.h1, href: `/blog/${article.slug}` },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.h1,
+    description: article.description,
+    image: `${SITE.domain}${article.heroImage}`,
+    datePublished: article.publishedAt,
+    dateModified: article.publishedAt,
+    author: { '@type': 'Organization', name: SITE.brandFullName },
+    publisher: { '@id': `${SITE.domain}/#localbusiness` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: article.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={article.title}
+  description={article.description}
+  canonicalPath={`/blog/${article.slug}`}
+  ogImage={article.heroImage}
+  ogType="article"
+  breadcrumbs={breadcrumbs}
+  schemas={schemas}
+>
+  <section class="page-hero">
+    <img src={article.heroImage} alt={article.h1} width={dims.w} height={dims.h} class="hero-bg" fetchpriority="high" />
+    <div class="hero-overlay"></div>
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="مسار التنقل">
+        <a href="/">الرئيسية</a>
+        <span>/</span>
+        <a href="/blog">المدونة وأدلة الأسعار</a>
+        <span>/</span>
+        <span>{article.category}</span>
+      </nav>
+      <span class="eyebrow">{article.category} • {article.readTime}</span>
+      <h1>{article.h1}</h1>
+      <p class="hero-subtitle" style="margin-bottom:0;">{article.excerpt}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-layout">
+      <article class="prose-block">
+        {article.priceTable && (
+          <div style="overflow-x:auto; margin-bottom:2rem;">
+            <p style="font-size:0.86rem; color:var(--ink-muted); margin-bottom:0.5rem;">{article.priceTable.caption}</p>
+            <table class="price-table">
+              <thead>
+                <tr>
+                  {article.priceTable.headers.map((h) => <th>{h}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {article.priceTable.rows.map((row) => (
+                  <tr>
+                    {row.map((cell) => <td>{cell}</td>)}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <div class="inline-cta-box" style="margin-top:0;">
+          <div>
+            <h3>عايز تعرف سعر قطعك بدقة الآن؟</h3>
+            <p>أرسل الصور عبر واتساب لفريق تقييم أركان واستلم أعلى سعر شراء كاش خلال دقائق.</p>
+          </div>
+          <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+            <a href={whatsappUrl(`مرحباً أركان، قرأت مقال (${article.h1}) وأريد تقييماً فورياً`)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-sm">
+              تقييم واتساب
+            </a>
+            <a href={article.ctaServiceUrl} class="btn btn-white btn-sm">
+              {article.ctaServiceLabel}
+            </a>
+          </div>
+        </div>
+
+        {article.sections.map((sec) => (
+          <div>
+            <h2>{sec.h2}</h2>
+            {sec.paragraphs.map((p) => <p>{p}</p>)}
+            {sec.bullets && (
+              <ul>
+                {sec.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            )}
+          </div>
+        ))}
+
+        <h2>خلاصة التقييم والخطوة الأسرع للبيع بأعلى سعر</h2>
+        <p>
+          يُعد التوقيت الصحيح وتجهيز الصور الواضحة والتعامل مع جهة منظمة مثل شركة أركان أهم عوامل الحصول على أعلى عائد نقدي عند البيع في مصر. لا تضيع وقتك في عروض غير جادة — أرسل صور أثاثك أو أجهزتك الآن لتستلم عرض سعر شفافاً ومعاينة مجانية ودفعاً فورياً كاش قبل التحميل.
+        </p>
+      </article>
+
+      <aside class="sticky-sidebar">
+        <div class="sidebar-card">
+          <h3>بيع سريع كاش مع أركان</h3>
+          <p>معاينة مجانية في منزلك • فك ونقل على حسابنا • دفع نقدي كامل قبل التحميل.</p>
+          <div style="display:grid; gap:0.65rem;">
+            <a href={whatsappUrl('مرحباً أركان، أريد تقييم فوري لبيع أثاث أو أجهزة مستعملة')} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+              أرسل الصور واتساب
+            </a>
+            <a href={article.ctaServiceUrl} class="btn btn-accent">
+              {article.ctaServiceLabel}
+            </a>
+            <a href={SITE.phoneHref} class="btn btn-outline-light">
+              اتصل: {SITE.phoneDisplay}
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-links-card">
+          <h4>خدمات ومقالات مرتبطة</h4>
+          <ul>
+            {article.relatedLinks.map((l) => (
+              <li><a href={l.href}>← {l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {article.faqs.length > 0 && <FaqSection title="أسئلة شائعة" items={article.faqs} />}
+  <ConversionBanner />
+</BaseLayout>

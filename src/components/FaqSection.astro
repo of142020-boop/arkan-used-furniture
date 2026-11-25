@@ -1,0 +1,81 @@
+---
+import { SITE, whatsappUrl } from '../config/site';
+
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
+export interface Props {
+  title?: string;
+  eyebrow?: string;
+  items: FaqItem[];
+  splitVisual?: boolean;
+  mainImage?: string;
+  insetImage?: string;
+}
+
+const {
+  title = 'إجابات واضحة لكل أسئلتك قبل البيع',
+  eyebrow = 'الأسئلة الشائعة',
+  items,
+  splitVisual = false,
+  mainImage = '/images/editorial-living.webp',
+  insetImage = '/images/bedroom-suite.webp',
+} = Astro.props;
+---
+
+<section class="section" id="faq">
+  <div class="container">
+    {splitVisual ? (
+      <div class="faq-split">
+        <div>
+          <span class="eyebrow">{eyebrow}</span>
+          <h2 class="section-title">{title}</h2>
+          <div class="faq-list">
+            {items.map((item, idx) => (
+              <details class="faq-item" open={idx === 0}>
+                <summary>
+                  <span>{item.q}</span>
+                  <span class="faq-icon" aria-hidden="true">+</span>
+                </summary>
+                <p class="faq-answer">{item.a}</p>
+              </details>
+            ))}
+          </div>
+          <div style="margin-top:1.75rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" class="btn btn-accent">
+              اسألنا عبر واتساب الآن
+            </a>
+            <a href={SITE.phoneHref} class="btn btn-outline-dark">
+              اتصل: {SITE.phoneDisplay}
+            </a>
+          </div>
+        </div>
+
+        <div class="faq-photos-stack" aria-hidden="true">
+          <img src={mainImage} alt="معاينة وتقييم الأثاث المستعمل في مصر — أركان" width="896" height="1200" class="faq-photo-main" loading="lazy" decoding="async" />
+          <img src={insetImage} alt="غرف نوم وأثاث منزلي مستعمل بحالة ممتازة" width="896" height="1200" class="faq-photo-inset" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    ) : (
+      <div style="max-width:820px; margin-inline:auto;">
+        <div class="text-center" style="margin-bottom:2rem;">
+          <span class="eyebrow">{eyebrow}</span>
+          <h2 class="section-title">{title}</h2>
+        </div>
+        <div class="faq-list">
+          {items.map((item, idx) => (
+            <details class="faq-item" open={idx === 0}>
+              <summary>
+                <span>{item.q}</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <p class="faq-answer">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>

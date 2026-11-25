@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import ConversionBanner from '../../components/ConversionBanner.astro';
+import { SITE, IMG_DIMS, whatsappUrl } from '../../config/site';
+import { COVERAGE_PAGES, type RegionalHubData } from '../../data/coverage';
+
+export function getStaticPaths() {
+  return COVERAGE_PAGES.map((region) => ({
+    params: { region: region.slug },
+    props: { region },
+  }));
+}
+
+interface Props {
+  region: RegionalHubData;
+}
+
+const { region } = Astro.props;
+const dims = IMG_DIMS[region.heroImage] || { w: 896, h: 1200 };
+
+const breadcrumbs = [
+  { label: 'الرئيسية', href: '/' },
+  { label: 'التغطية الجغرافية', href: '/coverage/egypt-governorates' },
+  { label: region.regionName, href: `/coverage/${region.slug}` },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: region.h1,
+    description: region.description,
+    provider: { '@id': `${SITE.domain}/#localbusiness` },
+    areaServed: region.areas.map((a) => ({ '@type': 'City', name: a })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: region.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={region.title}
+  description={region.description}
+  canonicalPath={`/coverage/${region.slug}`}
+  ogImage={region.heroImage}
+  breadcrumbs={breadcrumbs}
+  schemas={schemas}
+>
+  <section class="page-hero">
+    <img src={region.heroImage} alt={region.h1} width={dims.w} height={dims.h} class="hero-bg" fetchpriority="high" />
+    <div class="hero-overlay"></div>
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="مسار التنقل">
+        <a href="/">الرئيسية</a>
+        <span>/</span>
+        <span>التغطية في مصر</span>
+        <span>/</span>
+        <span>{region.regionName}</span>
+      </nav>
+      <span class="eyebrow">تغطية أركان الإقليمية — {region.regionName}</span>
+      <h1>{region.h1}</h1>
+      <p class="hero-subtitle" style="margin-bottom:1.5rem;">{region.lead}</p>
+      <div class="hero-ctas">
+        <a href={whatsappUrl(region.waMessage)} target="_blank" rel="noopener noreferrer" class="btn btn-white">
+          اطلب معاينة مجانية عبر واتساب
+        </a>
+        <a href={SITE.phoneHref} class="btn btn-accent">
+          اتصل الآن: {SITE.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-layout">
+      <div class="prose-block">
+        <h2>المناطق والأحياء والمدن التي نغطيها في {region.regionName}</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:0.55rem; margin:1rem 0 2rem;">
+          {region.areas.map((area) => (
+            <span style="padding:0.45rem 0.95rem; background:var(--bg-soft); border:1px solid var(--border-subtle); font-weight:700; font-size:0.88rem; border-radius:2px;">
+              {area}
+            </span>
+          ))}
+        </div>
+
+        {region.sections.map((sec) => (
+          <div>
+            <h2>{sec.h2}</h2>
+            {sec.paragraphs.map((p) => <p>{p}</p>)}
+            {sec.bullets && (
+              <ul>
+                {sec.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            )}
+          </div>
+        ))}
+
+        <h2>لماذا يفضل عملاء {region.regionName} البيع المباشر لشركة أركان؟</h2>
+        <div class="info-grid-2">
+          <div class="info-box">
+            <h3>توفير تكلفة الفك والنقل بالكامل</h3>
+            <p>لا تحتاج لتأجير عربية نقل أو نجار أو فني تكييف؛ فريق أركان يصل مجهزاً بالكامل ويتولى الفك والتحميل مجاناً.</p>
+          </div>
+          <div class="info-box">
+            <h3>استلام فوري ودفع كاش قبل التحميل</h3>
+            <p>نتفق على السعر العادل بشفافية وتستلم كامل المبلغ نقداً أو عبر إنستا باي قبل خروج أول قطعة من الشقة.</p>
+          </div>
+        </div>
+
+        <div class="inline-cta-box">
+          <div>
+            <h3>نصل إليك في {region.regionName} بأسرع وقت</h3>
+            <p>أرسل صور الأثاث أو الأجهزة مع اسم منطقتك الآن لتحديد الموعد والسعر المبدئي فوراً.</p>
+          </div>
+          <a href={whatsappUrl(region.waMessage)} target="_blank" rel="noopener noreferrer" class="btn btn-accent">
+            تقييم فوري واتساب
+          </a>
+        </div>
+      </div>
+
+      <aside class="sticky-sidebar">
+        <div class="sidebar-card">
+          <h3>فريق أركان — {region.regionName}</h3>
+          <p>معاينة مجانية • فك ونقل على حسابنا • دفع كاش كامل قبل التحميل.</p>
+          <div style="display:grid; gap:0.65rem;">
+            <a href={whatsappUrl(region.waMessage)} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+              تواصل واتساب
+            </a>
+            <a href={SITE.phoneHref} class="btn btn-white">
+              {SITE.phoneDisplay}
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-links-card">
+          <h4>تغطية باقي المحافظات والخدمات</h4>
+          <ul>
+            {region.relatedLinks.map((l) => (
+              <li><a href={l.href}>← {l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <FaqSection title={`أسئلة شائعة عن البيع في ${region.regionName}`} items={region.faqs} />
+  <ConversionBanner waMessage={region.waMessage} />
+</BaseLayout>

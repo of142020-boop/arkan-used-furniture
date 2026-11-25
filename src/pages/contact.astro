@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, whatsappUrl } from '../config/site';
+
+const breadcrumbs = [
+  { label: 'الرئيسية', href: '/' },
+  { label: 'تواصل معنا', href: '/contact' },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: `تواصل معنا — ${SITE.brandFullName}`,
+    url: `${SITE.domain}/contact`,
+  },
+];
+---
+
+<BaseLayout
+  title="تواصل معنا | أرقام شراء الأثاث والأجهزة المستعملة — أركان"
+  description="تواصل مع شركة أركان عبر رقم شراء اثاث مستعمل وواتساب لإرسال صور أثاثك أو أجهزتك المستعملة والحصول على تقييم فوري كاش ومعاينة مجانية في مصر."
+  canonicalPath="/contact"
+  solidHeader={true}
+  breadcrumbs={breadcrumbs}
+  schemas={schemas}
+>
+  <section class="page-hero" style="padding-bottom:3.25rem;">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="مسار التنقل">
+        <a href="/">الرئيسية</a>
+        <span>/</span>
+        <span>تواصل معنا</span>
+      </nav>
+      <span class="eyebrow">ارقام ناس تشتري عفش مستعمل • ارقام شركات تشتري اثاث مستعمل</span>
+      <h1>تواصل معنا الآن: رقم شراء اثاث مستعمل ومعاينة مجانية وتقييم كاش</h1>
+      <p class="hero-subtitle" style="margin-bottom:0;">
+        تبحث عن ارقام محلات شراء الاثاث المستعمل أو رقم يشتري اثاث مستعمل بسعر عادل؟ املأ النموذج السريع أو تواصل مباشرة عبر الهاتف وواتساب لتستلم التقييم خلال دقائق.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-layout">
+      <div>
+        <h2 class="section-title" style="font-size:2rem;">نموذج التقييم السريع وطلب المعاينة</h2>
+        <p class="section-lead" style="margin-bottom:1.75rem;">
+          نضع بين يديك <strong>رقم شراء اثاث مستعمل</strong> و<strong>ارقام شراء عفش مستعمل</strong> و<strong>ارقام بيع اثاث مستعمل</strong> المباشرة لشركة أركان. بدلاً من البحث العشوائي عن ارقام من يشتري الاثاث المستعمل أو رقم يشتري الاثاث المستعمل أو رقم بيع الاثاث المستعمل، املأ النموذج أدناه ليفتح واتساب برسالتك جاهزة لإرفاق الصور.
+        </p>
+
+        <form class="contact-form" id="arkan-quote-form">
+          <div class="form-grid-2">
+            <div class="field">
+              <label for="q-name">الاسم</label>
+              <input id="q-name" name="name" type="text" placeholder="مثال: أحمد محمود" required />
+            </div>
+            <div class="field">
+              <label for="q-city">المحافظة / المنطقة</label>
+              <input id="q-city" name="city" type="text" placeholder="مثال: القاهرة — التجمع الخامس / الإسكندرية / طنطا" required />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field">
+              <label for="q-category">نوع القطع المراد بيعها</label>
+              <select id="q-category" name="category">
+                <option value="عفش شقة / بيت كامل">عفش شقة / بيت كامل (تصفية)</option>
+                <option value="أجهزة كهربائية مستعملة (تكييف / ثلاجة / غسالة / بوتاجاز / شاشة)">أجهزة كهربائية مستعملة</option>
+                <option value="غرف نوم / أطفال / دواليب / مراتب">غرف نوم / أطفال / دواليب / مراتب</option>
+                <option value="أنتريه / صالون / ركنة / سفرة / نيش">أنتريه / صالون / ركنة / سفرة</option>
+                <option value="مطبخ مستعمل / سجاد / نجف / أنتيكات">مطبخ مستعمل / سجاد / نجف / أنتيكات</option>
+                <option value="أجهزة كسر زيرو">أجهزة أو أثاث كسر زيرو</option>
+                <option value="أجهزة تالفة / خربانة / شاشة مكسورة">أجهزة تالفة / خربانة / شاشة مكسورة</option>
+                <option value="أثاث مكتبي / فندقي">أثاث مكتبي / فندقي</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="q-condition">الحالة التقريبية</label>
+              <select id="q-condition" name="condition">
+                <option value="حالة ممتازة / كسر زيرو">حالة ممتازة / كسر زيرو</option>
+                <option value="مستعمل بحالة جيدة">مستعمل بحالة جيدة</option>
+                <option value="يحتاج صيانة / تالف / خردة">يحتاج صيانة / تالف / خردة</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="q-notes">تفاصيل إضافية (الماركة، عدد القطع، الموعد المناسب)</label>
+            <textarea id="q-notes" name="notes" rows="4" placeholder="مثال: تكييف كاريير 2.25 حصان + ثلاجة توشيبا 16 قدم + غرفة نوم دمياطي..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-whatsapp" style="justify-self:start;">
+            إرسال الطلب عبر واتساب وإرفاق الصور
+          </button>
+        </form>
+      </div>
+
+      <aside class="sticky-sidebar">
+        <div class="sidebar-card">
+          <h3>بيانات التواصل المباشر</h3>
+          <p>رقم الهاتف وواتساب تجريبي حالياً ويمكن تعديله من ملف الإعدادات المركزي.</p>
+          <ul class="feature-list-dark" style="margin:1rem 0 1.5rem;">
+            <li><span class="feature-bullet"></span><span><strong>الهاتف وواتساب:</strong> <span dir="ltr">{SITE.phoneDisplay}</span></span></li>
+            <li><span class="feature-bullet"></span><span><strong>البريد:</strong> {SITE.email}</span></li>
+            <li><span class="feature-bullet"></span><span><strong>ساعات العمل:</strong> {SITE.workingHours}</span></li>
+            <li><span class="feature-bullet"></span><span><strong>التغطية:</strong> {SITE.locationLabel}</span></li>
+          </ul>
+          <div style="display:grid; gap:0.65rem;">
+            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+              محادثة واتساب مباشرة
+            </a>
+            <a href={SITE.phoneHref} class="btn btn-white">
+              اتصال مباشر: {SITE.phoneDisplay}
+            </a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ waNum: SITE.whatsappNumber }}>
+    const form = document.getElementById('arkan-quote-form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const lines = [
+          'مرحباً شركة أركان، أريد تقييم وبيع مستعمل:',
+          `- الاسم: ${fd.get('name') || ''}`,
+          `- المحافظة/المنطقة: ${fd.get('city') || ''}`,
+          `- الفئة: ${fd.get('category') || ''}`,
+          `- الحالة: ${fd.get('condition') || ''}`,
+          fd.get('notes') ? `- التفاصيل: ${fd.get('notes')}` : '',
+          '(سأقوم بإرفاق الصور الآن)',
+        ].filter(Boolean);
+        window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener,noreferrer');
+      });
+    }
+  </script>
+</BaseLayout>

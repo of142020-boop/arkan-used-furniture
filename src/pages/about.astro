@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ConversionBanner from '../components/ConversionBanner.astro';
+import { SITE } from '../config/site';
+
+const breadcrumbs = [
+  { label: 'الرئيسية', href: '/' },
+  { label: 'من نحن', href: '/about' },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: `من نحن — ${SITE.brandFullName}`,
+    url: `${SITE.domain}/about`,
+  },
+];
+---
+
+<BaseLayout
+  title="من نحن | أركان لشراء الأثاث والأجهزة المستعملة في مصر"
+  description="تعرف على شركة أركان وخبرتها في تقييم وشراء الأثاث المنزلي والمكتبي والعفش الكامل والأجهزة الكهربائية المستعملة في جميع محافظات مصر بأمانة وكاش."
+  canonicalPath="/about"
+  solidHeader={true}
+  breadcrumbs={breadcrumbs}
+  schemas={schemas}
+>
+  <section class="page-hero" style="padding-bottom:3.25rem;">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="مسار التنقل">
+        <a href="/">الرئيسية</a>
+        <span>/</span>
+        <span>من نحن</span>
+      </nav>
+      <span class="eyebrow">أركان مصر • أمانة في التقييم والتزام في المواعيد</span>
+      <h1>من نحن: شريكك الموثوق لبيع الأثاث والأجهزة المستعملة في مصر بأعلى سعر</h1>
+      <p class="hero-subtitle" style="margin-bottom:0;">
+        تأسست أركان لتقديم تجربة احترافية ومنظمة لبيع الأثاث والعفش والأجهزة الكهربائية المستعملة في مصر، بعيداً عن عشوائية الوسطاء وبخس الأسعار.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container editorial-split">
+      <div>
+        <span class="eyebrow">معاييرنا في أركان</span>
+        <h2 class="section-title">التقييم العادل هو أساس الثقة</h2>
+        <p style="color:var(--ink-secondary);">
+          نؤمن أن بيع أثاث بيتك أو أجهزتك الكهربائية يجب أن يكون سهلاً وشفافاً ومحترماً؛ لذلك يضم فريقنا مقيمين ذوي خبرة حقيقية بأنواع الأخشاب (الزان، الكونتر الدمياطي، إيكيا) وجميع ماركات الأجهزة الكهربائية المصرية والعالمية.
+        </p>
+      </div>
+      <div>
+        <img src="/images/editorial-living.webp" alt="فريق أركان لتقييم الأثاث المستعمل في مصر" width="896" height="1200" class="editorial-photo" loading="lazy" decoding="async" />
+      </div>
+      <div class="editorial-aside">
+        <h3>فريق متكامل من المعاينة حتى النقل</h3>
+        <p>
+          نمتلك فرقاً فنية متخصصة تشمل نجارين لفك غرف النوم والمطابخ، وفنيي تبريد وتكييف لفك التكييفات بأمان، وسيارات نقل مغلقة ومجهزة لخدمة عملائنا في القاهرة والجيزة والإسكندرية وجميع محافظات مصر.
+        </p>
+        <a href="/contact" class="btn btn-accent">تواصل مع فريق أركان</a>
+      </div>
+    </div>
+  </section>
+
+  <ConversionBanner />
+</BaseLayout>

@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ConversionBanner from '../components/ConversionBanner.astro';
+import { SITE, whatsappUrl } from '../config/site';
+
+const steps = [
+  { num: '01', title: 'أرسل صور القطع عبر واتساب', desc: 'صوّر الأثاث أو الأجهزة في إضاءة واضحة واكتب اسم محافظتك، وسنرد عليك بتقييم مبدئي شفاف خلال 10 إلى 15 دقيقة.' },
+  { num: '02', title: 'معاينة منزلية مجانية في موعدك', desc: 'يصل مندوب أركان في الموعد المناسب لك لمعاينة القطع على الطبيعة وتأكيد أعلى سعر نهائي عادل بدون أي رسوم.' },
+  { num: '03', title: 'دفع كامل المبلغ كاش قبل التحميل', desc: 'تستلم ثمن الأثاث والأجهزة بالكامل نقداً (كاش) أو تحويل إنستا باي قبل أن يتحرك أي عامل أو تخرج أي قطعة من منزلك.' },
+  { num: '04', title: 'فك احترافي ونقل نظيف على حسابنا', desc: 'يقوم نجارونا وفنيو التكييف بفك غرف النوم والمطابخ والتكييفات بأمان ونقلها بسياراتنا المجهزة دون أي مجهود منك.' },
+];
+
+const breadcrumbs = [
+  { label: 'الرئيسية', href: '/' },
+  { label: 'كيف نعمل', href: '/how-it-works' },
+];
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'كيف تبيع أثاثك وأجهزتك المستعملة مع شركة أركان في مصر',
+    step: steps.map((s, idx) => ({
+      '@type': 'HowToStep',
+      position: idx + 1,
+      name: s.title,
+      text: s.desc,
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="كيف نعمل في أركان | 4 خطوات لبيع المستعمل كاش في مصر"
+  description="تعرف على خطوات أركان لشراء الأثاث والأجهزة المستعملة في مصر: إرسال الصور واتساب، التقييم المبدئي، المعاينة المجانية، الدفع كاش، والفك والنقل مجاناً."
+  canonicalPath="/how-it-works"
+  solidHeader={true}
+  breadcrumbs={breadcrumbs}
+  schemas={schemas}
+>
+  <section class="page-hero" style="padding-bottom:3.25rem;">
+    <div class="container page-hero-inner">
+      <nav class="breadcrumb" aria-label="مسار التنقل">
+        <a href="/">الرئيسية</a>
+        <span>/</span>
+        <span>كيف نعمل</span>
+      </nav>
+      <span class="eyebrow">شفافية وسرعة من أول رسالة حتى استلام الكاش</span>
+      <h1>كيف نشتري أثاثك وأجهزتك المستعملة في 4 خطوات سهلة ومضمونة</h1>
+      <p class="hero-subtitle" style="margin-bottom:0;">
+        صمّمنا رحلة بيع مريحة وآمنة تضمن لك أعلى تقييم عادل بدون إضاعة وقتك أو دفع أي مصاريف على الفك أو النقل.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="info-grid-2" style="gap:1.5rem;">
+        {steps.map((s) => (
+          <div class="info-box" style="padding:1.85rem;">
+            <span class="eyebrow" style="font-size:1.1rem; margin-bottom:0.4rem;">الخطوة {s.num}</span>
+            <h2 style="font-family:var(--font-display); font-size:1.55rem; margin-bottom:0.65rem;">{s.title}</h2>
+            <p style="font-size:0.96rem;">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div style="text-align:center; margin-top:2.5rem; display:flex; justify-content:center; gap:0.85rem; flex-wrap:wrap;">
+        <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" class="btn btn-accent">
+          ابدأ الخطوة الأولى عبر واتساب
+        </a>
+        <a href={SITE.phoneHref} class="btn btn-outline-dark">
+          اتصل الآن: {SITE.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <ConversionBanner />
+</BaseLayout>
