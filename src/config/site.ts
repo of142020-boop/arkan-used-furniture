@@ -10,16 +10,29 @@ export const SITE = {
   email: 'info@arkan-furniture.eg',
   workingHours: 'يومياً من 8 صباحاً حتى 12 منتصف الليل',
   locationLabel: 'القاهرة • الجيزة • الإسكندرية • جميع محافظات مصر',
-  defaultOgImage: '/images/hero-luxury-home.webp',
+  defaultOgImage: '/images/hero-home.webp',
 } as const;
 
 export const IMG_DIMS: Record<string, { w: number; h: number }> = {
-  '/images/hero-luxury-home.webp': { w: 1376, h: 768 },
-  '/images/appliances-ac-tv.webp': { w: 1376, h: 768 },
-  '/images/editorial-living.webp': { w: 896, h: 1200 },
-  '/images/bedroom-suite.webp': { w: 896, h: 1200 },
-  '/images/kitchen-appliances.webp': { w: 896, h: 1200 },
-  '/images/egypt-architecture.webp': { w: 896, h: 1200 },
+  '/images/hero-home.webp': { w: 1376, h: 768 },
+  '/images/coverage-egypt.webp': { w: 1376, h: 768 },
+  '/images/service-appliances.webp': { w: 896, h: 1200 },
+  '/images/service-ac.webp': { w: 896, h: 1200 },
+  '/images/service-fridges.webp': { w: 896, h: 1200 },
+  '/images/service-washers.webp': { w: 896, h: 1200 },
+  '/images/service-stoves-heaters.webp': { w: 896, h: 1200 },
+  '/images/service-tvs-small-appliances.webp': { w: 896, h: 1200 },
+  '/images/service-bedrooms.webp': { w: 896, h: 1200 },
+  '/images/service-living-dining.webp': { w: 896, h: 1200 },
+  '/images/service-kitchens-carpets.webp': { w: 896, h: 1200 },
+  '/images/service-full-apartment.webp': { w: 896, h: 1200 },
+  '/images/service-office-furniture.webp': { w: 896, h: 1200 },
+  '/images/team-trust-appraisal.webp': { w: 896, h: 1200 },
+  '/images/team-careful-moving.webp': { w: 896, h: 1200 },
+  '/images/region-cairo.webp': { w: 896, h: 1200 },
+  '/images/region-giza.webp': { w: 896, h: 1200 },
+  '/images/region-alexandria.webp': { w: 896, h: 1200 },
+  '/images/region-governorates.webp': { w: 896, h: 1200 },
 };
 
 export function whatsappUrl(message = 'مرحباً أركان، أريد تقييم وبيع أثاث أو أجهزة كهربائية مستعملة'): string {

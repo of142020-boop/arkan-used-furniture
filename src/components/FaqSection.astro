@@ -1,5 +1,5 @@
 ---
-import { SITE, whatsappUrl } from '../config/site';
+import { SITE, IMG_DIMS, whatsappUrl } from '../config/site';
 
 export interface FaqItem {
   q: string;
@@ -12,7 +12,9 @@ export interface Props {
   items: FaqItem[];
   splitVisual?: boolean;
   mainImage?: string;
+  mainAlt?: string;
   insetImage?: string;
+  insetAlt?: string;
 }
 
 const {
@@ -20,9 +22,14 @@ const {
   eyebrow = 'الأسئلة الشائعة',
   items,
   splitVisual = false,
-  mainImage = '/images/editorial-living.webp',
-  insetImage = '/images/bedroom-suite.webp',
+  mainImage = '/images/service-kitchens-carpets.webp',
+  mainAlt = 'مندوب شركة أركان يعاين المطابخ والسجاد والنجف والأنتيكات المستعملة في مصر',
+  insetImage = '/images/service-ac.webp',
+  insetAlt = 'فني تكييف شركة أركان يفك ويعاين تكييف سبليت مستعمل مجاناً',
 } = Astro.props;
+
+const mainDims = IMG_DIMS[mainImage] || { w: 896, h: 1200 };
+const insetDims = IMG_DIMS[insetImage] || { w: 896, h: 1200 };
 ---
 
 <section class="section" id="faq">
@@ -54,8 +61,8 @@ const {
         </div>
 
         <div class="faq-photos-stack" aria-hidden="true">
-          <img src={mainImage} alt="معاينة وتقييم الأثاث المستعمل في مصر — أركان" width="896" height="1200" class="faq-photo-main" loading="lazy" decoding="async" />
-          <img src={insetImage} alt="غرف نوم وأثاث منزلي مستعمل بحالة ممتازة" width="896" height="1200" class="faq-photo-inset" loading="lazy" decoding="async" />
+          <img src={mainImage} alt={mainAlt} width={mainDims.w} height={mainDims.h} class="faq-photo-main" loading="lazy" decoding="async" />
+          <img src={insetImage} alt={insetAlt} width={insetDims.w} height={insetDims.h} class="faq-photo-inset" loading="lazy" decoding="async" />
         </div>
       </div>
     ) : (

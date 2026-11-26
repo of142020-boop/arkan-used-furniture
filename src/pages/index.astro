@@ -1,96 +1,131 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import FaqSection from '../components/FaqSection.astro';
-import ConversionBanner from '../components/ConversionBanner.astro';
-import { SITE, APPLIANCE_BRANDS, whatsappUrl } from '../config/site';
-import { COVERAGE_PAGES } from '../data/coverage';
-import { BLOG_ARTICLES } from '../data/blog';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqSection from "../components/FaqSection.astro";
+import ConversionBanner from "../components/ConversionBanner.astro";
+import { SITE, IMG_DIMS, APPLIANCE_BRANDS, whatsappUrl } from "../config/site";
+import { COVERAGE_PAGES } from "../data/coverage";
+import { BLOG_ARTICLES } from "../data/blog";
 
 const homeFaqs = [
   {
-    q: 'ما هي أرقام ناس تشتري أثاث مستعمل وكيف أبدأ التقييم؟',
+    q: "ما هي أرقام ناس تشتري أثاث مستعمل وكيف أبدأ التقييم؟",
     a: `إذا كنت تبحث عن ارقام ناس تشتري اثاث مستعمل أو ارقام شراء اثاث مستعمل موثوقة في مصر، تواصل مع أركان عبر الهاتف أو واتساب (${SITE.phoneDisplay}) وأرسل 3 صور واضحة للأثاث أو الأجهزة، وسنرسل لك تقييماً مبدئياً عادلاً خلال 10 إلى 15 دقيقة.`,
   },
   {
-    q: 'هل أنتم شركة لشراء الاثاث المستعمل تغطي جميع محافظات مصر؟',
-    a: 'نعم، أركان شركة لشراء الاثاث المستعمل والأجهزة الكهربائية تغطي القاهرة الكبرى والجيزة والإسكندرية وجميع محافظات الدلتا والقناة والصعيد، وتُعد بديلاً منظماً ومضموناً عن التعامل مع محلات شراء اثاث مستعمل عشوائية.',
+    q: "هل أنتم شركة لشراء الاثاث المستعمل تغطي جميع محافظات مصر؟",
+    a: "نعم، أركان شركة لشراء الاثاث المستعمل والأجهزة الكهربائية تغطي القاهرة الكبرى والجيزة والإسكندرية وجميع محافظات الدلتا والقناة والصعيد، وتُعد بديلاً منظماً ومضموناً عن التعامل مع محلات شراء اثاث مستعمل عشوائية.",
   },
   {
-    q: 'كيف يتم بيع اثاث مستعمل أو بيع عفش مستعمل بأعلى سعر كاش؟',
-    a: 'عند الرغبة في بيع اثاث مستعمل أو بيع عفش مستعمل، لا تفك القطع قبل المعاينة؛ صوّرها في إضاءة واضحة وأرسلها عبر واتساب لتقييمها بسعر السوق العادل، ثم نصلك للمعاينة المجانية والدفع كاش قبل التحميل.',
+    q: "كيف يتم بيع اثاث مستعمل أو بيع عفش مستعمل بأعلى سعر كاش؟",
+    a: "عند الرغبة في بيع اثاث مستعمل أو بيع عفش مستعمل، لا تفك القطع قبل المعاينة؛ صوّرها في إضاءة واضحة وأرسلها عبر واتساب لتقييمها بسعر السوق العادل، ثم نصلك للمعاينة المجانية والدفع كاش قبل التحميل.",
   },
   {
-    q: 'من يتحمل تكلفة فك غرف النوم والمطابخ والتكييفات والنقل؟',
-    a: 'تتحمل شركة أركان 100% من تكلفة المعاينة والفك والتحميل والنقل بواسطة نجارين وفنيي تكييف متخصصين — لا يدفع العميل أي مصاريف إضافية عند إتمام شراء اثاث مستعمل أو شراء عفش مستعمل.',
+    q: "من يتحمل تكلفة فك غرف النوم والمطابخ والتكييفات والنقل؟",
+    a: "تتحمل شركة أركان 100% من تكلفة المعاينة والفك والتحميل والنقل بواسطة نجارين وفنيي تكييف متخصصين — لا يدفع العميل أي مصاريف إضافية عند إتمام شراء اثاث مستعمل أو شراء عفش مستعمل.",
   },
   {
-    q: 'هل تشترون الأجهزة الكهربائية التالفة أو الخربانة والشاشات المكسورة؟',
-    a: 'نعم، نشتري اثاث مستعمل والأجهزة الكهربائية الشغالة وكسر الزيرو، كما نشتري التكييفات والثلاجات والغسالات الخربانة والشاشات المكسورة بأسعار عادلة مع نقلها مجاناً.',
+    q: "هل تشترون الأجهزة الكهربائية التالفة أو الخربانة والشاشات المكسورة؟",
+    a: "نعم، نشتري اثاث مستعمل والأجهزة الكهربائية الشغالة وكسر الزيرو، كما نشتري التكييفات والثلاجات والغسالات الخربانة والشاشات المكسورة بأسعار عادلة مع نقلها مجاناً.",
   },
   {
-    q: 'ما الفرق بين أركان وبين محلات تشتري اثاث مستعمل التقليدية؟',
-    a: 'على عكس محلات تشتري اثاث مستعمل التقليدية التي تتطلب منك نقل العفش أو الانتظار طويلاً، توفر أركان تقييماً فورياً بالصور، التزاماً بالمواعيد، دفعاً نقدياً كاملاً قبل النزول، وفريق فك ونقل كامل على حسابنا.',
+    q: "ما الفرق بين أركان وبين محلات تشتري اثاث مستعمل التقليدية؟",
+    a: "على عكس محلات تشتري اثاث مستعمل التقليدية التي تتطلب منك نقل العفش أو الانتظار طويلاً، توفر أركان تقييماً فورياً بالصور، التزاماً بالمواعيد، دفعاً نقدياً كاملاً قبل النزول، وفريق فك ونقل كامل على حسابنا.",
   },
 ];
 
 const homeSchemas = [
   {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
+    "@context": "https://schema.org",
+    "@type": "WebSite",
     name: SITE.brandFullName,
     url: SITE.domain,
-    inLanguage: 'ar-EG',
+    inLanguage: "ar-EG",
   },
   {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
     mainEntity: homeFaqs.map((f) => ({
-      '@type': 'Question',
+      "@type": "Question",
       name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
+      acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   },
 ];
 
 const featuredCategories = [
   {
-    tag: 'الأكثر طلباً في مصر',
-    title: 'شراء الأجهزة الكهربائية المستعملة',
-    desc: 'تكييفات، ثلاجات، ديب فريزر، غسالات، بوتاجازات، سخانات، وشاشات — شغال وكسر زيرو وتالف.',
-    image: '/images/kitchen-appliances.webp',
-    href: '/buy-used-appliances',
+    tag: "الأكثر طلباً في مصر",
+    title: "شراء الأجهزة الكهربائية المستعملة",
+    desc: "تكييفات، ثلاجات، ديب فريزر، غسالات، بوتاجازات، سخانات، وشاشات — شغال وكسر زيرو وتالف.",
+    image: "/images/service-appliances.webp",
+    alt: "أخصائي شركة أركان يعاين الثلاجات والغسالات والبوتاجازات والتكييفات المستعملة للتقييم الكاش",
+    href: "/buy-used-appliances",
   },
   {
-    tag: 'فك نجارين مجاني',
-    title: 'شراء غرف النوم والمراتب والدواليب',
-    desc: 'غرف نوم مودرن وكلاسيك ودمياطي، غرف أطفال، دواليب، سراير، ومراتب سوست وقطن.',
-    image: '/images/bedroom-suite.webp',
-    href: '/buy-used-bedrooms',
+    tag: "فك نجارين مجاني",
+    title: "شراء غرف النوم والمراتب والدواليب",
+    desc: "غرف نوم مودرن وكلاسيك ودمياطي، غرف أطفال، دواليب، سراير، ومراتب سوست وقطن.",
+    image: "/images/service-bedrooms.webp",
+    alt: "نجار ومقيم أركان يعاين غرفة نوم خشبية ومرتبة ودولاب جرار قبل الفك المجاني",
+    href: "/buy-used-bedrooms",
   },
   {
-    tag: 'استلام خلال 24 ساعة',
-    title: 'تصفية شقق وشراء عفش بيت كامل',
-    desc: 'نشتري كامل أثاث وأجهزة الشقة أو الفيلا دفعة واحدة (إيكيا، دمياطي، مودرن، قديم) كاش.',
-    image: '/images/editorial-living.webp',
-    href: '/buy-full-apartment-furniture',
+    tag: "استلام خلال 24 ساعة",
+    title: "تصفية شقق وشراء عفش بيت كامل",
+    desc: "نشتري كامل أثاث وأجهزة الشقة أو الفيلا دفعة واحدة (إيكيا، دمياطي، مودرن، قديم) كاش.",
+    image: "/images/service-full-apartment.webp",
+    alt: "فريق أركان يحمل أثاث وأجهزة شقة كاملة ضمن خدمة تصفية الشقق خلال 24 ساعة",
+    href: "/buy-full-apartment-furniture",
   },
 ];
 
 const allCategoryTiles = [
-  { title: 'شراء التكييفات المستعملة', sub: 'سبليت، شباك، إنفرتر — فك فني مجاني', href: '/buy-used-ac' },
-  { title: 'شراء الثلاجات والديب فريزر', sub: 'نوفروست، ديفروست، ميني بار، وأدراج', href: '/buy-used-fridges' },
-  { title: 'شراء الغسالات وغسالات الأطباق', sub: 'فول أوتوماتيك، فوق أوتوماتيك، وخربانة', href: '/buy-used-washers' },
-  { title: 'شراء البوتاجازات والأفران والسخانات', sub: '4 و5 شعلة، بلت-إن، غاز وكهرباء', href: '/buy-used-stoves-heaters' },
-  { title: 'شراء الشاشات والميكروويف', sub: 'شاشات سمارت ومكسورة ومبردات مياه', href: '/buy-used-tvs-small-appliances' },
-  { title: 'شراء الأنتريهات والصالونات والسفرة', sub: 'أنتريهات، ركنات، صالونات مدهب، ونيش', href: '/buy-used-living-dining' },
-  { title: 'شراء المطابخ والسجاد والأنتيكات', sub: 'مطابخ ألوميتال وخشب، سجاد، نجف، وتحف', href: '/buy-used-kitchens-carpets-antiques' },
-  { title: 'شراء الأثاث المكتبي والفندقي', sub: 'مكاتب، كراسي، وتصفية شركات وفنادق', href: '/buy-used-office-furniture' },
+  {
+    title: "شراء التكييفات المستعملة",
+    sub: "سبليت، شباك، إنفرتر — فك فني مجاني",
+    href: "/buy-used-ac",
+  },
+  {
+    title: "شراء الثلاجات والديب فريزر",
+    sub: "نوفروست، ديفروست، ميني بار، وأدراج",
+    href: "/buy-used-fridges",
+  },
+  {
+    title: "شراء الغسالات وغسالات الأطباق",
+    sub: "فول أوتوماتيك، فوق أوتوماتيك، وخربانة",
+    href: "/buy-used-washers",
+  },
+  {
+    title: "شراء البوتاجازات والأفران والسخانات",
+    sub: "4 و5 شعلة، بلت-إن، غاز وكهرباء",
+    href: "/buy-used-stoves-heaters",
+  },
+  {
+    title: "شراء الشاشات والميكروويف",
+    sub: "شاشات سمارت ومكسورة ومبردات مياه",
+    href: "/buy-used-tvs-small-appliances",
+  },
+  {
+    title: "شراء الأنتريهات والصالونات والسفرة",
+    sub: "أنتريهات، ركنات، صالونات مدهب، ونيش",
+    href: "/buy-used-living-dining",
+  },
+  {
+    title: "شراء المطابخ والسجاد والأنتيكات",
+    sub: "مطابخ ألوميتال وخشب، سجاد، نجف، وتحف",
+    href: "/buy-used-kitchens-carpets-antiques",
+  },
+  {
+    title: "شراء الأثاث المكتبي والفندقي",
+    sub: "مكاتب، كراسي، وتصفية شركات وفنادق",
+    href: "/buy-used-office-furniture",
+  },
 ];
 
 const featuredGuides = [
-  BLOG_ARTICLES.find((b) => b.slug === 'used-furniture-markets-egypt')!,
-  BLOG_ARTICLES.find((b) => b.slug === 'used-ac-prices-egypt')!,
-  BLOG_ARTICLES.find((b) => b.slug === 'used-furniture-prices-egypt')!,
+  BLOG_ARTICLES.find((b) => b.slug === "used-furniture-markets-egypt")!,
+  BLOG_ARTICLES.find((b) => b.slug === "used-ac-prices-egypt")!,
+  BLOG_ARTICLES.find((b) => b.slug === "used-furniture-prices-egypt")!,
 ];
 ---
 
@@ -103,8 +138,8 @@ const featuredGuides = [
   <!-- 1) FULL-BLEED LUXURY DARK HERO -->
   <section class="hero-home">
     <img
-      src="/images/hero-luxury-home.webp"
-      alt="أركان — شراء اثاث مستعمل وأجهزة كهربائية مستعملة في مصر"
+      src="/images/hero-home.webp"
+      alt="فريق شركة أركان يرحب بأصحاب المنزل ويعاين الأثاث والأجهزة الكهربائية المستعملة للشراء الكاش في مصر"
       width="1376"
       height="768"
       class="hero-bg"
@@ -113,13 +148,23 @@ const featuredGuides = [
     <div class="hero-overlay"></div>
 
     <div class="container hero-content">
-      <span class="eyebrow">أركان مصر • شراء اثاث مستعمل وأجهزة كهربائية كاش</span>
+      <span class="eyebrow">
+        أركان مصر • شراء اثاث مستعمل وأجهزة كهربائية كاش
+      </span>
       <h1>شراء اثاث مستعمل وعفش وأجهزة كهربائية في مصر بأعلى سعر كاش</h1>
       <p class="hero-subtitle">
-        في شركة أركان <strong>نشتري اثاث مستعمل</strong> وعفش منزلي ومكتبي بالكامل وجميع الأجهزة الكهربائية المستعملة وكسر الزيرو والتالفة في كل محافظات مصر — معاينة منزلية مجانية، فك ونقل على حسابنا، ودفع نقدي كامل قبل التحميل.
+        في شركة أركان <strong>نشتري اثاث مستعمل</strong> وعفش منزلي ومكتبي
+        بالكامل وجميع الأجهزة الكهربائية المستعملة وكسر الزيرو والتالفة في كل
+        محافظات مصر — معاينة منزلية مجانية، فك ونقل على حسابنا، ودفع نقدي كامل
+        قبل التحميل.
       </p>
       <div class="hero-ctas">
-        <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" class="btn btn-white">
+        <a
+          href={whatsappUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-white"
+        >
           أرسل الصور واتساب للتقييم الفوري
         </a>
         <a href={SITE.phoneHref} class="btn btn-accent">
@@ -132,7 +177,10 @@ const featuredGuides = [
       <div class="container hero-strip-grid">
         <span class="hero-strip-item">
           <span class="hero-strip-dot"></span>
-          <span>اتصال وواتساب (تجريبي): <strong dir="ltr">{SITE.phoneDisplay}</strong></span>
+          <span>
+            اتصال وواتساب (تجريبي):{" "}
+            <strong dir="ltr">{SITE.phoneDisplay}</strong>
+          </span>
         </span>
         <span class="hero-strip-item">
           <span class="hero-strip-dot"></span>
@@ -152,19 +200,48 @@ const featuredGuides = [
       <div class="editorial-split">
         <div>
           <span class="eyebrow">شركة لشراء الاثاث المستعمل في مصر</span>
-          <h2 class="section-title">شريكك الموثوق عند بيع اثاث مستعمل أو بيع عفش مستعمل</h2>
-          <svg class="editorial-wireframe" viewBox="0 0 220 150" fill="none" aria-hidden="true">
-            <path d="M18 132H202M34 132V54L110 18L186 54V132" stroke="#0B1A2C" stroke-width="1.5" />
-            <rect x="64" y="72" width="38" height="60" stroke="#0B1A2C" stroke-width="1.5" />
-            <rect x="118" y="72" width="44" height="32" stroke="#0B1A2C" stroke-width="1.5" />
-            <path d="M140 72V104M118 88H162" stroke="#0B1A2C" stroke-width="1.2" />
+          <h2 class="section-title">
+            شريكك الموثوق عند بيع اثاث مستعمل أو بيع عفش مستعمل
+          </h2>
+          <svg
+            class="editorial-wireframe"
+            viewBox="0 0 220 150"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M18 132H202M34 132V54L110 18L186 54V132"
+              stroke="#0B1A2C"
+              stroke-width="1.5"
+            />
+            <rect
+              x="64"
+              y="72"
+              width="38"
+              height="60"
+              stroke="#0B1A2C"
+              stroke-width="1.5"
+            />
+            <rect
+              x="118"
+              y="72"
+              width="44"
+              height="32"
+              stroke="#0B1A2C"
+              stroke-width="1.5"
+            />
+            <path
+              d="M140 72V104M118 88H162"
+              stroke="#0B1A2C"
+              stroke-width="1.2"
+            />
           </svg>
         </div>
 
         <div>
           <img
-            src="/images/editorial-living.webp"
-            alt="تقييم وشراء اثاث مستعمل والأنتريهات والسفرة في مصر"
+            src="/images/team-trust-appraisal.webp"
+            alt="كبير مقيمي شركة أركان يصافح صاحب المنزل بثقة وأمانة بعد الاتفاق على أعلى سعر كاش"
             width="896"
             height="1200"
             class="editorial-photo"
@@ -174,11 +251,23 @@ const featuredGuides = [
         </div>
 
         <div class="editorial-aside">
-          <h3>أمانة في التقييم،<br />سرعة في التنفيذ،<br />ودفع كاش فوري.</h3>
+          <h3>
+            أمانة في التقييم،
+            <br />
+            سرعة في التنفيذ،
+            <br />
+            ودفع كاش فوري.
+          </h3>
           <p>
-            إذا كنت تبحث عن <strong>ارقام ناس تشتري اثاث مستعمل</strong> أو <strong>محلات شراء اثاث مستعمل</strong> تقدّر قيمة مقتنياتك بعدالة بدون بخس أو وسطاء، توفر لك أركان خدمة <strong>شراء عفش مستعمل</strong> وأجهزة كهربائية بتقييم فوري عبر صور واتساب ومعاينة مجانية في نفس اليوم.
+            إذا كنت تبحث عن <strong>ارقام ناس تشتري اثاث مستعمل</strong> أو{" "}
+            <strong>محلات شراء اثاث مستعمل</strong> تقدّر قيمة مقتنياتك بعدالة
+            بدون بخس أو وسطاء، توفر لك أركان خدمة{" "}
+            <strong>شراء عفش مستعمل</strong> وأجهزة كهربائية بتقييم فوري عبر صور
+            واتساب ومعاينة مجانية في نفس اليوم.
           </p>
-          <a href="/how-it-works" class="btn btn-accent">تعرّف على خطوات البيع</a>
+          <a href="/how-it-works" class="btn btn-accent">
+            تعرّف على خطوات البيع
+          </a>
         </div>
       </div>
     </div>
@@ -189,29 +278,47 @@ const featuredGuides = [
     <div class="container">
       <div class="text-center">
         <span class="eyebrow">نشتري اثاث مستعمل وأجهزة كهربائية وعفش كامل</span>
-        <h2 class="section-title">معيار أعلى لخدمة شراء اثاث مستعمل والأجهزة في مصر</h2>
+        <h2 class="section-title">
+          معيار أعلى لخدمة شراء اثاث مستعمل والأجهزة في مصر
+        </h2>
         <p class="section-lead">
-          سواء أردت بيع جهاز كهربائي واحد، غرفة نوم، أو تصفية شقة وفيلا بالكامل — اختر الفئة المناسبة لمعرفة تفاصيل الشراء والتقييم الفوري كاش.
+          سواء أردت بيع جهاز كهربائي واحد، غرفة نوم، أو تصفية شقة وفيلا بالكامل
+          — اختر الفئة المناسبة لمعرفة تفاصيل الشراء والتقييم الفوري كاش.
         </p>
         <div style="margin-top:1.5rem;">
-          <a href="/contact" class="btn btn-accent">اطلب تقييماً مجانياً الآن</a>
+          <a href="/contact" class="btn btn-accent">
+            اطلب تقييماً مجانياً الآن
+          </a>
         </div>
       </div>
 
       <div class="services-featured-grid">
-        {featuredCategories.map((cat) => (
-          <a href={cat.href} class="visual-card">
-            <img src={cat.image} alt={cat.title} width="896" height="1200" loading="lazy" decoding="async" />
-            <div class="visual-card-overlay">
-              <span class="visual-card-tag">{cat.tag}</span>
-              <h3 class="visual-card-title">{cat.title}</h3>
-              <p class="visual-card-desc">{cat.desc}</p>
-            </div>
-          </a>
-        ))}
+        {featuredCategories.map((cat) => {
+          const d = IMG_DIMS[cat.image] || { w: 896, h: 1200 };
+          return (
+            <a href={cat.href} class="visual-card">
+              <img
+                src={cat.image}
+                alt={cat.alt}
+                width={d.w}
+                height={d.h}
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="visual-card-overlay">
+                <span class="visual-card-tag">{cat.tag}</span>
+                <h3 class="visual-card-title">{cat.title}</h3>
+                <p class="visual-card-desc">{cat.desc}</p>
+              </div>
+            </a>
+          );
+        })}
       </div>
 
-      <div class="category-grid" aria-label="جميع فئات الأثاث والأجهزة التي نشتريها">
+      <div
+        class="category-grid"
+        aria-label="جميع فئات الأثاث والأجهزة التي نشتريها"
+      >
         {allCategoryTiles.map((tile) => (
           <a href={tile.href} class="cat-tile">
             <div>
@@ -230,36 +337,58 @@ const featuredGuides = [
     <div class="container">
       <div class="boutique-grid">
         <div>
-          <span class="eyebrow">بديلك الأفضل عن محلات تشتري اثاث مستعمل التقليدية</span>
-          <h2 class="section-title">لماذا يثق بنا العملاء عند بيع اثاث مستعمل في مصر؟</h2>
+          <span class="eyebrow">
+            بديلك الأفضل عن محلات تشتري اثاث مستعمل التقليدية
+          </span>
+          <h2 class="section-title">
+            لماذا يثق بنا العملاء عند بيع اثاث مستعمل في مصر؟
+          </h2>
           <p class="section-lead">
-            نتعامل مع كل منزل كصفقة خاصة تستحق الاحترام والدقة؛ نوفر <strong>ارقام شراء اثاث مستعمل</strong> متاحة يومياً مع تقييم شفاف يعكس سعر السوق الحقيقي بدون مصاريف خفية.
+            نتعامل مع كل منزل كصفقة خاصة تستحق الاحترام والدقة؛ نوفر{" "}
+            <strong>ارقام شراء اثاث مستعمل</strong> متاحة يومياً مع تقييم شفاف
+            يعكس سعر السوق الحقيقي بدون مصاريف خفية.
           </p>
           <ul class="feature-list-dark">
             <li>
               <span class="feature-bullet"></span>
-              <span><strong>أعلى سعر كاش في السوق المصري:</strong> تقييم مبني على نوع الخشب (الزان والكونتر الدمياطي) والماركة والسعر الفعلي اليومي.</span>
+              <span>
+                <strong>أعلى سعر كاش في السوق المصري:</strong> تقييم مبني على
+                نوع الخشب (الزان والكونتر الدمياطي) والماركة والسعر الفعلي
+                اليومي.
+              </span>
             </li>
             <li>
               <span class="feature-bullet"></span>
-              <span><strong>فك متخصص بدون أي تلفيات:</strong> نجارون لغرف النوم والمطابخ وفنيون لفك التكييفات والغسالات بأمان كامل.</span>
+              <span>
+                <strong>فك متخصص بدون أي تلفيات:</strong> نجارون لغرف النوم
+                والمطابخ وفنيون لفك التكييفات والغسالات بأمان كامل.
+              </span>
             </li>
             <li>
               <span class="feature-bullet"></span>
-              <span><strong>نشتري الشغال وكسر الزيرو والخربان:</strong> تسعير خاص ومرتفع لحالة كسر الزيرو، وشراء عادل للأجهزة التالفة والشاشات المكسورة.</span>
+              <span>
+                <strong>نشتري الشغال وكسر الزيرو والخربان:</strong> تسعير خاص
+                ومرتفع لحالة كسر الزيرو، وشراء عادل للأجهزة التالفة والشاشات
+                المكسورة.
+              </span>
             </li>
             <li>
               <span class="feature-bullet"></span>
-              <span><strong>التزام بالمواعيد والدفع قبل النقل:</strong> تستلم كامل المبلغ نقداً أو عبر إنستا باي قبل خروج أول قطعة من منزلك.</span>
+              <span>
+                <strong>التزام بالمواعيد والدفع قبل النقل:</strong> تستلم كامل
+                المبلغ نقداً أو عبر إنستا باي قبل خروج أول قطعة من منزلك.
+              </span>
             </li>
           </ul>
-          <a href="/about" class="btn btn-white">تعرّف على شركة أركان</a>
+          <a href="/about" class="btn btn-white">
+            تعرّف على شركة أركان
+          </a>
         </div>
 
         <div class="boutique-photos">
           <img
-            src="/images/bedroom-suite.webp"
-            alt="شراء غرف النوم والأثاث المنزلي الراقي المستعمل في مصر"
+            src="/images/team-careful-moving.webp"
+            alt="نجارو شركة أركان يفكون دولاب غرفة نوم خشبي بحرفية وعناية كاملة دون أي تلفيات"
             width="896"
             height="1200"
             class="boutique-photo-1"
@@ -268,8 +397,8 @@ const featuredGuides = [
           />
           <div class="boutique-photo-2-wrap">
             <img
-              src="/images/kitchen-appliances.webp"
-              alt="شراء الثلاجات والغسالات والبوتاجازات والمطابخ المستعملة"
+              src="/images/service-living-dining.webp"
+              alt="خبير أركان يقيّم أنتريه وصالون خشب دمياطي وسفرة ونيش مستعمل في ريسبشن منزلي"
               width="896"
               height="1200"
               class="boutique-photo-2"
@@ -277,7 +406,13 @@ const featuredGuides = [
               decoding="async"
             />
             <div class="boutique-float-cta">
-              <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" class="btn btn-white btn-sm" style="width:100%;">
+              <a
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-white btn-sm"
+                style="width:100%;"
+              >
                 تقييم بالصور خلال 10 دقائق
               </a>
             </div>
@@ -286,7 +421,10 @@ const featuredGuides = [
       </div>
 
       <div class="brands-strip">
-        <p class="brands-strip-label">نشتري جميع الماركات المصرية والعالمية للأجهزة الكهربائية والأثاث بأعلى سعر</p>
+        <p class="brands-strip-label">
+          نشتري جميع الماركات المصرية والعالمية للأجهزة الكهربائية والأثاث بأعلى
+          سعر
+        </p>
         <div class="brands-grid">
           {APPLIANCE_BRANDS.map((brand) => (
             <span class="brand-pill">{brand}</span>
@@ -301,9 +439,12 @@ const featuredGuides = [
     <div class="container">
       <div class="text-center">
         <span class="eyebrow">شفافية تامة بدون أي عمولات</span>
-        <h2 class="section-title">3 طرق مرنة لبيع أثاثك وأجهزتك المستعملة كاش</h2>
+        <h2 class="section-title">
+          3 طرق مرنة لبيع أثاثك وأجهزتك المستعملة كاش
+        </h2>
         <p class="section-lead">
-          لا توجد التزامات أو شروط معقدة — اختر الطريقة التي تناسب حجم القطع التي تريد بيعها اليوم.
+          لا توجد التزامات أو شروط معقدة — اختر الطريقة التي تناسب حجم القطع
+          التي تريد بيعها اليوم.
         </p>
       </div>
 
@@ -311,7 +452,14 @@ const featuredGuides = [
         <article class="plan-card">
           <h3 class="plan-title">بيع قطعة أو جهاز واحد</h3>
           <div class="plan-badge-val">تقييم خلال 10 دقائق</div>
-          <a href={whatsappUrl('مرحباً أركان، أريد بيع قطعة أثاث أو جهاز كهربائي واحد')} target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark btn-sm">
+          <a
+            href={whatsappUrl(
+              "مرحباً أركان، أريد بيع قطعة أثاث أو جهاز كهربائي واحد",
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline-dark btn-sm"
+          >
             أرسل صورة القطعة واتساب
           </a>
           <div class="plan-divider"></div>
@@ -344,7 +492,10 @@ const featuredGuides = [
         <article class="plan-card">
           <h3 class="plan-title">كسر زيرو أو أثاث شركات</h3>
           <div class="plan-badge-val">تسعير خاص للحالة والكميات</div>
-          <a href="/buy-used-office-furniture" class="btn btn-outline-dark btn-sm">
+          <a
+            href="/buy-used-office-furniture"
+            class="btn btn-outline-dark btn-sm"
+          >
             تواصل للتسعير الخاص
           </a>
           <div class="plan-divider"></div>
@@ -366,21 +517,35 @@ const featuredGuides = [
       <div class="regions-header">
         <div>
           <span class="eyebrow">تغطية شاملة لجمهورية مصر العربية</span>
-          <h2 class="section-title" style="margin-bottom:0;">نغطي القاهرة والجيزة والإسكندرية وجميع محافظات مصر</h2>
+          <h2 class="section-title" style="margin-bottom:0;">
+            نغطي القاهرة والجيزة والإسكندرية وجميع محافظات مصر
+          </h2>
         </div>
-        <a href="/coverage/egypt-governorates" class="btn btn-accent">عرض جميع المحافظات</a>
+        <a href="/coverage/egypt-governorates" class="btn btn-accent">
+          عرض جميع المحافظات
+        </a>
       </div>
 
       <div class="regions-grid">
-        {COVERAGE_PAGES.map((region) => (
-          <a href={`/coverage/${region.slug}`} class="region-card">
-            <img src={region.heroImage} alt={`شراء اثاث مستعمل في ${region.regionName}`} width="896" height="1200" loading="lazy" decoding="async" />
-            <div class="region-card-overlay">
-              <h3>{region.regionName}</h3>
-              <p>{region.cardSub}</p>
-            </div>
-          </a>
-        ))}
+        {COVERAGE_PAGES.map((region) => {
+          const d = IMG_DIMS[region.cardImage] || { w: 896, h: 1200 };
+          return (
+            <a href={`/coverage/${region.slug}`} class="region-card">
+              <img
+                src={region.cardImage}
+                alt={region.cardAlt}
+                width={d.w}
+                height={d.h}
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="region-card-overlay">
+                <h3>{region.regionName}</h3>
+                <p>{region.cardSub}</p>
+              </div>
+            </a>
+          );
+        })}
       </div>
     </div>
   </section>
@@ -391,8 +556,10 @@ const featuredGuides = [
     title="إجابات واضحة لكل أسئلتك حول شراء اثاث مستعمل والأجهزة في مصر"
     items={homeFaqs}
     splitVisual={true}
-    mainImage="/images/editorial-living.webp"
-    insetImage="/images/bedroom-suite.webp"
+    mainImage="/images/service-kitchens-carpets.webp"
+    mainAlt="مندوب شركة أركان يعاين المطابخ والسجاد والنجف والأنتيكات المستعملة للتقييم الكاش"
+    insetImage="/images/service-ac.webp"
+    insetAlt="فني تكييف أركان يفك تكييف سبليت مستعمل باحترافية وأمان مجاناً"
   />
 
   <!-- 8) PRICING GUIDES & MARKET AUTHORITY BLOG PREVIEW -->
@@ -401,25 +568,45 @@ const featuredGuides = [
       <div class="regions-header">
         <div>
           <span class="eyebrow">أدلة الأسعار والسوق المصري</span>
-          <h2 class="section-title" style="margin-bottom:0;">اعرف قيمة أثاثك وأجهزتك المستعملة قبل البيع</h2>
+          <h2 class="section-title" style="margin-bottom:0;">
+            اعرف قيمة أثاثك وأجهزتك المستعملة قبل البيع
+          </h2>
         </div>
-        <a href="/blog" class="btn btn-outline-dark">تصفح كل الأدلة والمقالات</a>
+        <a href="/blog" class="btn btn-outline-dark">
+          تصفح كل الأدلة والمقالات
+        </a>
       </div>
 
       <div class="blog-grid">
-        {featuredGuides.map((post) => (
-          <article class="blog-card">
-            <a href={`/blog/${post.slug}`}>
-              <img src={post.heroImage} alt={post.h1} width="896" height="1200" loading="lazy" decoding="async" />
-            </a>
-            <div class="blog-card-body">
-              <span class="eyebrow" style="margin-bottom:0.4rem;">{post.category}</span>
-              <h3><a href={`/blog/${post.slug}`}>{post.h1}</a></h3>
-              <p>{post.excerpt}</p>
-              <a href={`/blog/${post.slug}`} class="cat-tile-link">اقرأ الدليل الكامل ←</a>
-            </div>
-          </article>
-        ))}
+        {featuredGuides.map((post) => {
+          const d = IMG_DIMS[post.heroImage] || { w: 896, h: 1200 };
+          return (
+            <article class="blog-card">
+              <a href={`/blog/${post.slug}`}>
+                <img
+                  src={post.heroImage}
+                  alt={post.heroAlt}
+                  width={d.w}
+                  height={d.h}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+              <div class="blog-card-body">
+                <span class="eyebrow" style="margin-bottom:0.4rem;">
+                  {post.category}
+                </span>
+                <h3>
+                  <a href={`/blog/${post.slug}`}>{post.h1}</a>
+                </h3>
+                <p>{post.excerpt}</p>
+                <a href={`/blog/${post.slug}`} class="cat-tile-link">
+                  اقرأ الدليل الكامل ←
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   </section>
